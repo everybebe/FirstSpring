@@ -106,7 +106,7 @@
 						</table>
 					</div>
 				</form>
-				<a href="#" onclick="" class="btn btn-outline-primary">&laquo;더보기</a>
+				<a href="/board/list.do" onclick="" class="btn btn-outline-primary">&laquo;더보기</a>
 			</div>
 			<div class="col-md-6">
 				<div align="left">
