@@ -49,7 +49,7 @@ public class BoardInsertController {
 			model.addAttribute("board", boardVO);
 			goPage = "board/form";
 		} else { //에러가 발생하지 않고 정상적인 데이터가 넘어옴(정상)
-			boardVO.setBoWriter("a001");
+			boardVO.setBoWriter("깅밍정");
 			ServiceResult result = boardService.insertBoard(boardVO);
 			if(result.equals(ServiceResult.OK)) {  //등록 성공
 				goPage = "redirect:/board/detail.do?boNo=" + boardVO.getBoNo();

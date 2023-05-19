@@ -7,6 +7,16 @@
   
   
 <mapper namespace="Board">
+	<sql id="boardSearch">
+		<if test="searchType != null and searchType == 'title'">
+		and (botitle like '%' || #{searchWord}||'%')
+		</if>
+		<if test="searchType != null and searchType == 'writer'">
+		and (bowriter like '%' || #{searchWord}||'%')
+		</if>
+	</sql>
+
+
 	<insert id="insertBoard" parameterType="boardVO" useGeneratedKeys="true">
 		<selectKey keyProperty="boNo" order="BEFORE" resultType="int">
 			select seq_board.nextval from dual
@@ -56,11 +66,10 @@
 	</select>
 	
 	<select id="selectBoardCount" parameterType="pagingVO" resultType="int">
-	
 		select count(bono)   
 		from board
 		where 1=1
-	
+		<include refid="boardSearch" />
 	</select>
 	
 	
@@ -75,6 +84,7 @@
 					to_char(bodate, 'yy-mm-dd hh24:mi:ss') bodate, bohit
 				from board
 				where 1=1
+				<include refid="boardSearch" />
 				order by bono desc
 			) a
 		) b

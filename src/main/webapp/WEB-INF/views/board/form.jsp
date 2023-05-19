@@ -17,7 +17,7 @@
 		<c:set value="수정" var="name" />
 	</c:if>
 	<div class="wrapper">
-		<nav
+		<nav>
 			class="main-header navbar navbar-expand navbar-white navbar-light">
 			<ul class="navbar-nav">
 				<li class="nav-item">

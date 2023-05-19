@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <html>
 <head>
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/bootstrap.min.css" />
@@ -12,14 +13,38 @@
 			<h1 class="display-3">공지게시판 목록</h1>
 		</div>
 	</div>
+
 	<div class="container">
-		<form action="" method="post">
+	<!-- 	<form action="" method="post"> -->
 			<div>
-				<div class="text-right">
-					<span class="badge badge-success">전체 건	</span>
-				</div>
+			<div class="text-right">
+				<span class="">전체 ${pagingVO.totalRecord } 건 이상</span>
+			</div>
 			</div>
 			<div style="padding-top: 50px">
+			<div class="col-md-12">
+			<div class="card">
+			<div class="card-header">
+			<div class="card-tools">
+				<form class="input-group input-group-sm" method="post" id="searchForm" style="width: 440px;">
+					<input type="hidden" name="page" id="page" />
+					<select class="form-control" name="searchType">
+						<option value="title" <c:if test="${searchType == 'title' }"><c:out value="selected"/></c:if>>제목</option>
+						<option value="writer" <c:if test="${searchType == 'writer' }"><c:out value="selected"/></c:if>>작성자</option>
+						<option value="titleWriter" <c:if test="${searchType == 'titleWriter' }"><c:out value="selected"/></c:if>>제목+작성자</option>
+					</select>
+					<input type="text" name="searchWord" class="form-control float-right" value="${searchWord }" placeholder="Search">
+					<div class="input-group-append">
+						<button type="submit" class="btn btn-default">
+							<i class="fas fa-search"></i>검색
+						</button>
+					</div>
+				</form>
+			</div>	
+			</div>	
+			</div>
+			</div>	
+			
 				<table class="table">
 					<thead class="table-dark">
 						<tr>
@@ -31,22 +56,67 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td colspan="5">조회하신 게시글이 존재하지 않습니다.</td>
-						</tr>
+						<c:set value="${pagingVO.dataList }" var="noticeList" />
+						<c:choose>
+							<c:when test="${empty noticeList }">
+								<tr>
+									<td colspan="5">조회하신 게시글이 존재하지 않습니다.</td>
+								</tr>
+							</c:when>
+							<c:otherwise>
+								<c:forEach items="${noticeList }" var="notice">
+									<tr id="${notice.boNo }">
+										<td>${notice.boNo }</td>
+										<td>
+										<a href="/notice/detail.do?boNo=${notice.boNo }">
+											${notice.boTitle } 
+											</a>
+										</td>
+										<td>${notice.boWriter }</td>
+										<td>${notice.boDate }</td>
+										<td>${notice.boHit }</td>
+									</tr>
+								</c:forEach>
+							</c:otherwise>
+						</c:choose>
+
 					</tbody>
 				</table>
 			</div>
 			<div align="left">
-				<a href="#" onclick="checkForm(); return false;" class="btn btn-primary">&laquo;글쓰기</a>
+				<button type="button" class="btn btn-primary" id="newBtn">&laquo;글쓰기</button>
 			</div>
-		</form>
+		<!-- </form> -->
+			<div class="card-footer clearfix" id="pagingArea">
+			${pagingVO.pagingHTML }
+			</div>
 		<hr>
 	</div>
+		<script src="${pageContext.request.contextPath}/resources/plugins/jquery/jquery.min.js"></script>
 </body>
+<script type="text/javascript">
+$(function(){
+	var newBtn = $("#newBtn");
+	var searchForm = $("#searchForm");
+	var pagingArea = $("#pagingArea");
+	
+	pagingArea.on("click", "a", function(event){
+		event.preventDefault();
+		var pageNo = $(this).data("page");
+		searchForm.find("#page").val(pageNo);
+		searchForm.submit();
+	})
+	
+	newBtn.on("click", function(){
+		location.href = "/notice/form.do";
+	})
+	
+	
+	$("tr").on("click", function(){
+		var tnum = $(this).attr('id')		
+		location.href = "/notice/detail.do?boNo=" + tnum;
+	})
+})
+</script>
 </html>
-
-
-
-
 

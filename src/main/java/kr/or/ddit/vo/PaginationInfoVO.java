@@ -13,8 +13,8 @@ public class PaginationInfoVO<T> {
 	private int startPage;						//시작 페이지
 	private int endPage;						//끝 페이지
 	private List<T> dataList;					//결과를 넣을 데이터 리스트
-	private String serachType;					//검색 타입(제목, 내용, 작성자, 작성일 등등)
-	private String serchWord;					//검색 단어(키워드)
+	private String searchType;					//검색 타입(제목, 내용, 작성자, 작성일 등등)
+	private String searchWord;					//검색 단어(키워드)
 
 	public PaginationInfoVO() {
 		
@@ -118,20 +118,20 @@ public class PaginationInfoVO<T> {
 		this.dataList = dataList;
 	}
 
-	public String getSerachType() {
-		return serachType;
+	public String getSearchType() {
+		return searchType;
 	}
 
-	public void setSerachType(String serachType) {
-		this.serachType = serachType;
+	public void setSearchType(String searchType) {
+		this.searchType = searchType;
 	}
 
 	public String getSerchWord() {
-		return serchWord;
+		return searchWord;
 	}
 
-	public void setSerchWord(String serchWord) {
-		this.serchWord = serchWord;
+	public void setSerchWord(String searchWord) {
+		this.searchWord = searchWord;
 	}
 	
 	public String getPagingHTML() {

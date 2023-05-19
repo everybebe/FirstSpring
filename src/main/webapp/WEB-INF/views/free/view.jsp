@@ -17,28 +17,68 @@
 			<div class="form-group row">
 				<label class="col-sm-2 control-label" >제목</label>
 				<div class="col-sm-5">
-					<input name="subject" class="form-control"	value="" >
+					 ${free.boTitle }
 				</div>
 			</div>
 			<div class="form-group row">
 				<label class="col-sm-2 control-label" >내용</label>
 				<div class="col-sm-8" style="word-break: break-all;">
-					<textarea name="content" class="form-control" cols="50" rows="5"></textarea>
+			    	${free.boContent }
 				</div>
 			</div>
 			<div class="form-group row">
 				<div class="col-sm-offset-2 col-sm-10 ">
 					<p>
-						<a	href=""	class="btn btn-danger"> 삭제</a> 
-						<input type="submit" class="btn btn-success" value="수정 ">
-						<a href="" class="btn btn-primary"> 목록</a>
+						<button type="button" class="btn btn-primary" id="delBtn">삭제</button>
+						<button type="button" class="btn btn-info"  id="updateBtn">수정</button>
+						<button type="button" class="btn btn-danger"  id="listBtn">목록</button>
 					</p>
 				</div>
 			</div>
 		</form>
+		<form action="/free/update.do" method="get" id="nFrm">
+			<input type="hidden" name="boNo" value="${free.boNo }" />
+		</form>
 		<hr>
 	</div>
+	
+	
+	<script src="${pageContext.request.contextPath}/resources/plugins/jquery/jquery.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/dist/js/adminlte.min.js"></script>
+	
 </body>
+
+
+
+<script type="text/javascript">
+$(function(){
+	var delBtn = $("#delBtn"); 
+	var updateBtn = $("#updateBtn");
+	var listBtn = $("#listBtn");
+	var nFrm = $("#nFrm");
+	
+	delBtn.on("click", function(){
+		if(confirm("정말 삭제하실건가요?")) {
+			nFrm.attr("method","post");
+			nFrm.attr("action", "/free/delete.do");
+			nFrm.submit();
+		} else {
+			nFrm.reset();
+		}
+	})
+
+	updateBtn.on("click", function(){
+		nFrm.submit();
+	})
+	
+	listBtn.on("click", function(){
+		location.href = "/free/list.do";
+	})
+})
+
+</script>
+	
 </html>
 
 
